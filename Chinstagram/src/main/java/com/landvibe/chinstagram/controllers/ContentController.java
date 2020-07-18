@@ -1,5 +1,6 @@
 package com.landvibe.chinstagram.controllers;
 
+import com.landvibe.chinstagram.models.Content;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.AbstractDocument;
@@ -8,9 +9,6 @@ import javax.swing.text.AbstractDocument;
 @RequestMapping("/content")
 public class ContentController {
 
-    public ContentController() {
-
-    }
 
 
 }

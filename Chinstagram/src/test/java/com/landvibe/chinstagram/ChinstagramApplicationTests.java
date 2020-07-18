@@ -1,13 +1,18 @@
 package com.landvibe.chinstagram;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import com.landvibe.chinstagram.models.Content;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
+@WebMvcTest
 class ChinstagramApplicationTests {
 
     @Test
     void contextLoads() {
+        Content content = new Content();
+        content.setScript("기성이 바보");
+        System.out.println(content.getScript());
     }
 
 }

@@ -1,16 +1,34 @@
 package com.landvibe.chinstagram.models;
 
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Content {
 
+    @Id
     private int id;
+
+    @Column
     private String script;
 
-    private String[] image = new String[2];
-    private String imageName;
-    private String imagePath;
+    @Column
+    private List<Image> images;
 
+    @Column
     private LocalDateTime createTime;
+
+    @Column
     private LocalDateTime updateTime;
+
+
 }

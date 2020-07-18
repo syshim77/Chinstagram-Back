@@ -5,22 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class Image {
 
-    @Id
-    private String id;
-
-    @Column
-    private String email;
-
-    @Column
     private String name;
-
-    @Column
-    private String pw;
+    private String path;
 }

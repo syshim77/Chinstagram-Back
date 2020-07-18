@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://172.17.0.1:3306
+    username: root
+    password:
+  jpa:
+    database: mysql
+    generate-ddl: true
+    show-sql: true
