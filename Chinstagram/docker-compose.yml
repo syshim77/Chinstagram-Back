@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORK: landvibe
+  web:
+    build: ./docker/Dockerfile
+    image: chinstagram:latest
+    ports:
+      - "80:8080"
+    links:
+      - db:db
