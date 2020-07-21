@@ -1,14 +1,41 @@
 package com.landvibe.chinstagram.controllers;
 
 import com.landvibe.chinstagram.models.Content;
+import com.landvibe.chinstagram.services.ContentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.AbstractDocument;
+import java.util.List;
 
-@RestController // @Controller + @ResponseBody
+@RestController
 @RequestMapping("/content")
 public class ContentController {
 
+    private ContentService contentService;
 
+    public ContentController(ContentService contentService) {
+        this.contentService = contentService;
+    }
 
+    @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Content> getContents(@RequestParam int skip, @RequestParam int limit) {
+        return this.contentService.getContents(skip, limit);
+    }
+
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Content createContent(@RequestBody Content content) {
+        return this.contentService.createContent(content);
+    }
+
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Content updateContent(@RequestBody Content content, @PathVariable int id) {
+        return this.contentService.updateContent(content, id);
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteContent() {}
 }

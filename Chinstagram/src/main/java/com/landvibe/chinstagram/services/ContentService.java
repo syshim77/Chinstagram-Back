@@ -16,9 +16,7 @@ public class ContentService {
         this.contentRepository = contentRepository;
     }
 
-    public List<Content> getContents(int skip, int limit) {
-        return this.contentRepository.findAll();
-    }
+    public List<Content> getContents(int skip, int limit) { return this.contentRepository.findAll(); }
 
     public Content createContent(Content content) {
         return this.contentRepository.save(content);
@@ -28,6 +26,5 @@ public class ContentService {
         return this.contentRepository.save(content);
     }
 
-    public void deleteContent(int id) {
-    }
+    public void deleteContent(int id) {}
 }

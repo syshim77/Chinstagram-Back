@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,12 +24,11 @@ public class Profile {
 
     @Column
     private Image image;
-    //private String pimageName;
-    //private String pimagePath;
 
     @Column
     private LocalDateTime createTime;
 
     @Column
     private LocalDateTime updateTime;
+
 }

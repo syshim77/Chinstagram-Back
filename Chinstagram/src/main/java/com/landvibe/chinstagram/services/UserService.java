@@ -5,6 +5,8 @@ import com.landvibe.chinstagram.models.User;
 import com.landvibe.chinstagram.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -20,11 +22,23 @@ public class UserService {
     }
 
     public String logIn(User user) {
-        if (this.userRepository.findById(user.getId()).isPresent()) {
-            // TODO: check whether log-in is successful
-        } else {
+        Optional<User> loginUser = userRepository.findById(user.getId());
+
+        if (!loginUser.isPresent()) {
             // TODO: log-in fail
         }
+
         return access_token;
+    }
+
+    public User updateProfile(Profile profile, String id) {
+        User loginUser = userRepository.findById(id).get();
+        loginUser.setProfile(profile);
+
+        return this.userRepository.save(loginUser);
+    }
+
+    public User getProfile(String id) {
+        return this.userRepository.findById(id).get();
     }
 }
