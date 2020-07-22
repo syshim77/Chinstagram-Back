@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://172.17.0.1:3306/chinstagram?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/chinstagram?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: landvibe
   jpa:

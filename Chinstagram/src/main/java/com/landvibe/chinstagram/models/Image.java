@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -14,11 +12,17 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 public class Image {
 
+    @Id
     private String name;
+
+    @Column
     private String path;
 
     @OneToOne
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 
+    @ManyToOne
+    @JoinColumn(name = "content_id", referencedColumnName = "id")
+    private Content content;
 }
