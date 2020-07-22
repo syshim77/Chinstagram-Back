@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Getter
 @Setter
@@ -18,7 +20,7 @@ public class Content {
     @Column
     private String script;
 
-    @OneToMany(mappedBy = "content")
+    @OneToMany(mappedBy = "content", fetch = FetchType.LAZY, cascade = { PERSIST, REFRESH, REMOVE })
     private List<Image> images;
 
     @Column
