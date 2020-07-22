@@ -4,6 +4,7 @@ spring:
     username: root
     password: landvibe
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
     generate-ddl: true
     show-sql: true
