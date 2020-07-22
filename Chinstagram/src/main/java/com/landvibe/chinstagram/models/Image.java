@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Getter
@@ -19,4 +20,5 @@ public class Image {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Profile profile;
+
 }

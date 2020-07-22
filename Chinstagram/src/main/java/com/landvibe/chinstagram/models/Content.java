@@ -23,8 +23,7 @@ public class Content {
     @Column
     private String script;
 
-    @OneToMany
-    @JoinColumn(name = "content_id")
+    @OneToMany(mappedBy = "content")
     private List<Image> images;
 
     @Column
