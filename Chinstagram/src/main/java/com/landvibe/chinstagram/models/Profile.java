@@ -23,7 +23,7 @@ public class Profile {
     private String intro;
 
     @OneToOne
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "image_id")
     private Image image;
 
     @Column
@@ -32,8 +32,7 @@ public class Profile {
     @Column
     private LocalDateTime updateTime;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "user")
     private User user;
 
     @PrePersist

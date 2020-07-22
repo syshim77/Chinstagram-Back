@@ -28,7 +28,8 @@ public class User {
     @Column
     private String token;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne
+    @JoinColumn(name = "profile_id")
     private Profile profile;
 
 }
