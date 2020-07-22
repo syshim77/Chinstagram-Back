@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # RUN APPLICATION
-java -cp ./:/dstagram/operation/  \
+java -cp ./:/chinstagram/operation/  \
     -Xms1024m -Xmx1024m \
-    -jar /dstagram/*.war \
+    -jar /chinstagram/*.war \
     --server.port=8080 "$@"
