@@ -19,7 +19,6 @@ public class Image {
     private String path;
 
     @ManyToOne
-    @JoinColumn(name = "content_id")
     private Content content;
 
 }
