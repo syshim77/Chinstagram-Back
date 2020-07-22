@@ -18,7 +18,7 @@ public class Image {
     private String path;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 
 }
