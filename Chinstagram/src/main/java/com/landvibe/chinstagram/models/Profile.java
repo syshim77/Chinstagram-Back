@@ -31,9 +31,9 @@ public class Profile {
     @Column
     private LocalDateTime updateTime;
 
-//    @OneToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @PrePersist
     protected void onCreate() {
