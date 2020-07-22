@@ -22,7 +22,8 @@ public class Profile {
     @Column
     private String intro;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne
+    @JoinColumn(name = "profile_id")
     private Image image;
 
     @Column
