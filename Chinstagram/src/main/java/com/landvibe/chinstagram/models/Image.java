@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "image")
 @NoArgsConstructor
 public class Image {
 

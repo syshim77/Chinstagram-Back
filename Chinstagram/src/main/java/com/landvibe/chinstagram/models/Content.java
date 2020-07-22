@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "content")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Content {
