@@ -29,7 +29,7 @@ public class User {
     @Column
     private String token;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne(mappedBy = "user")
     private Profile profile;
 
     @Builder

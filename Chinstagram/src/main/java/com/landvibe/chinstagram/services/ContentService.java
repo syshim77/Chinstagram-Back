@@ -2,6 +2,7 @@ package com.landvibe.chinstagram.services;
 
 import com.landvibe.chinstagram.models.Content;
 import com.landvibe.chinstagram.repositories.ContentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContentService {
 
+    @Autowired
     private ContentRepository contentRepository;
 
     public ContentService (ContentRepository contentRepository) {
