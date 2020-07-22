@@ -23,8 +23,8 @@ public class Content {
     @Column
     private String script;
 
-    @OneToMany(mappedBy = "content")
-    private List<Image> images;
+//    @OneToMany(mappedBy = "content")
+//    private List<Image> images;
 
     @Column
     private LocalDateTime createTime;

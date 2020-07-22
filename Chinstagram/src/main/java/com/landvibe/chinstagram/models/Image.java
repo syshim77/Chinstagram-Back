@@ -18,11 +18,11 @@ public class Image {
     @Column
     private String path;
 
-    @OneToOne
-    @JoinColumn(name = "profile_id")
-    private Profile profile;
-
-    @ManyToOne
-    @JoinColumn(name = "content_id")
-    private Content content;
+//    @OneToOne
+//    @JoinColumn(name = "profile_id")
+//    private Profile profile;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "content_id")
+//    private Content content;
 }

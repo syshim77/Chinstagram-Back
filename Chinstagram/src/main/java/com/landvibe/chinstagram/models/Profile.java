@@ -22,8 +22,8 @@ public class Profile {
     @Column
     private String intro;
 
-    @OneToOne(mappedBy = "profile")
-    private Image image;
+//    @OneToOne(mappedBy = "profile")
+//    private Image image;
 
     @Column
     private LocalDateTime createTime;
@@ -31,9 +31,9 @@ public class Profile {
     @Column
     private LocalDateTime updateTime;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @OneToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     @PrePersist
     protected void onCreate() {
