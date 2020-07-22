@@ -18,7 +18,4 @@ public class Image {
     @Column
     private String path;
 
-    @ManyToOne
-    private Content content;
-
 }

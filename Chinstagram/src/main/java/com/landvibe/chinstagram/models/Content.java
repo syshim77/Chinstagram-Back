@@ -20,7 +20,8 @@ public class Content {
     @Column
     private String script;
 
-    @OneToMany(mappedBy = "content", fetch = FetchType.LAZY, cascade = { PERSIST, REFRESH, REMOVE })
+    @OneToMany
+    @JoinColumn(name = "content_id")
     private List<Image> images;
 
     @Column
@@ -47,4 +48,5 @@ public class Content {
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
+
 }
