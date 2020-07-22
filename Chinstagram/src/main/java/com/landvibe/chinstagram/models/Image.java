@@ -19,10 +19,10 @@ public class Image {
     private String path;
 
     @OneToOne
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JoinColumn(name = "profile_id")
     private Profile profile;
 
     @ManyToOne
-    @JoinColumn(name = "content_id", referencedColumnName = "id")
+    @JoinColumn(name = "content_id")
     private Content content;
 }
