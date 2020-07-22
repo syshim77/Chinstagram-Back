@@ -32,7 +32,7 @@ public class Profile {
     @Column
     private LocalDateTime updateTime;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "profile")
     private User user;
 
     @PrePersist
