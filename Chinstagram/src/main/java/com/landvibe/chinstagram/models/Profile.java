@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Table(name = "profile")
 @NoArgsConstructor
 public class Profile {
 
@@ -22,8 +23,8 @@ public class Profile {
     @Column
     private String intro;
 
-//    @OneToOne(mappedBy = "profile")
-//    private Image image;
+    @OneToOne(mappedBy = "profile")
+    private Image image;
 
     @Column
     private LocalDateTime createTime;
