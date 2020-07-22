@@ -22,7 +22,7 @@ public class Profile {
     @Column
     private String intro;
 
-    @Column
+    @OneToOne(mappedBy = "profile")
     private Image image;
 
     @Column
