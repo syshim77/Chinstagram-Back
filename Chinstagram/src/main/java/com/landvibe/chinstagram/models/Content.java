@@ -1,9 +1,6 @@
 package com.landvibe.chinstagram.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Content {
 
     @Id
@@ -39,5 +35,14 @@ public class Content {
     @PreUpdate
     protected void onUpdate() {
         updateTime = LocalDateTime.now();
+    }
+
+    @Builder
+    public Content(int id, String script, List<Image> images, LocalDateTime createTime, LocalDateTime updateTime) {
+        this.id = id;
+        this.script = script;
+        this.images = images;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 }

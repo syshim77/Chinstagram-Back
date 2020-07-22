@@ -22,11 +22,31 @@ public class ContentService {
     }
 
     public Content createContent(Content content) {
-        return this.contentRepository.save(content);
+        Content newContent = Content.builder()
+                .id(content.getId())
+                .script(content.getScript())
+                .images(content.getImages())
+                .createTime(content.getCreateTime())
+                .updateTime(content.getUpdateTime())
+                .build();
+
+        return this.contentRepository.save(newContent);
     }
 
     public Content updateContent(Content content, int id) {
-        return this.contentRepository.save(content);
+        if (!contentRepository.findById(id).isPresent()) {
+            throw new IllegalArgumentException("This ID is not exist.");
+        }
+
+        Content findContent = Content.builder()
+                .id(content.getId())
+                .script(content.getScript())
+                .images(content.getImages())
+                .createTime(content.getCreateTime())
+                .updateTime(content.getUpdateTime())
+                .build();
+
+        return this.contentRepository.save(findContent);
     }
 
     public void deleteContent(int id) {}

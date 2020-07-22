@@ -31,10 +31,4 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Profile profile;
 
-    @Builder
-    public User(String id, String pw, String token) {
-        this.id = id;
-        this.pw = pw;
-        this.token = token;
-    }
 }
