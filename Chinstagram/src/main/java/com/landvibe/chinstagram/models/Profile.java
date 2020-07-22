@@ -31,6 +31,10 @@ public class Profile {
     @Column
     private LocalDateTime updateTime;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     @PrePersist
     protected void onCreate() {
         createTime = LocalDateTime.now();
