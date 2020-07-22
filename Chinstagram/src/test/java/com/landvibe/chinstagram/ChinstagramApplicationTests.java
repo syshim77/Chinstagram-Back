@@ -11,7 +11,7 @@ class ChinstagramApplicationTests {
     @Test
     void contextLoads() {
         Content content = new Content();
-        content.setScript("기성이 바보");
+        content.setScript("test script");
         System.out.println(content.getScript());
     }
 

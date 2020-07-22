@@ -32,5 +32,13 @@ public class Content {
     @Column
     private LocalDateTime updateTime;
 
+    @PrePersist
+    protected void onCreate() {
+        createTime = LocalDateTime.now();
+    }
 
+    @PreUpdate
+    protected void onUpdate() {
+        updateTime = LocalDateTime.now();
+    }
 }

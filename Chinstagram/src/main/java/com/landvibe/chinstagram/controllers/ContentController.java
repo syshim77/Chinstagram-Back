@@ -2,10 +2,9 @@ package com.landvibe.chinstagram.controllers;
 
 import com.landvibe.chinstagram.models.Content;
 import com.landvibe.chinstagram.services.ContentService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/content")
@@ -19,7 +18,7 @@ public class ContentController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public List<Content> getContents(@RequestParam int skip, @RequestParam int limit) {
+    public Page<Content> getContents(@RequestParam int skip, @RequestParam int limit) {
         return this.contentService.getContents(skip, limit);
     }
 

@@ -2,10 +2,9 @@ package com.landvibe.chinstagram.services;
 
 import com.landvibe.chinstagram.models.Content;
 import com.landvibe.chinstagram.repositories.ContentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Service
 public class ContentService {
@@ -16,7 +15,9 @@ public class ContentService {
         this.contentRepository = contentRepository;
     }
 
-    public List<Content> getContents(int skip, int limit) { return this.contentRepository.findAll(); }
+    public Page<Content> getContents(int skip, int limit) {
+        return contentRepository.findAll(PageRequest.of(skip, limit));
+    }
 
     public Content createContent(Content content) {
         return this.contentRepository.save(content);

@@ -1,5 +1,6 @@
 package com.landvibe.chinstagram.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "user")
 @NoArgsConstructor
 public class User {
 
@@ -24,6 +26,16 @@ public class User {
     @Column
     private String pw;
 
+    @Column
+    private String token;
+
     @OneToOne(mappedBy = "profile")
     private Profile profile;
+
+    @Builder
+    public User(String id, String pw, String token) {
+        this.id = id;
+        this.pw = pw;
+        this.token = token;
+    }
 }
