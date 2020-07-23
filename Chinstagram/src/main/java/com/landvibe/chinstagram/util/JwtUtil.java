@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
+
     private String SECRET_KEY = "SECRETKEY";
     private Date EXPIRED_TIME = new Date(System.currentTimeMillis() + 1000 * 10);
     private String ISSUER = "SYS";

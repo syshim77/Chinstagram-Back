@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtAuthInterceptor implements HandlerInterceptor {
+
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -21,8 +23,8 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
     private String HEADER_TOKEN_KEY = "token";
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        User user = userRepository.findById(request.getHeader("id")).orElseThrow(() -> new IllegalArgumentException("This user is not exist."));
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws AuthenticationException {
+        User user = userRepository.findById(request.getHeader("id")).orElseThrow(() -> new AuthenticationException("This user is not exist."));
 
         String givenToken = request.getHeader(HEADER_TOKEN_KEY);
         verifyToken(givenToken, user.getToken());
@@ -30,9 +32,9 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void verifyToken(String givenToken, String membersToken) {
+    private void verifyToken(String givenToken, String membersToken) throws AuthenticationException {
         if (!givenToken.equals(membersToken)) {
-            throw new IllegalArgumentException("Incorrect token.");
+            throw new AuthenticationException("Incorrect token.");
         }
 
         jwtUtil.verifyToken(givenToken);

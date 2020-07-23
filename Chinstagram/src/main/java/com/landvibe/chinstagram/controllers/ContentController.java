@@ -30,11 +30,13 @@ public class ContentController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Content updateContent(@RequestBody Content content, @PathVariable int id) {
+    public Content updateContent(@RequestBody Content content, @PathVariable int id) throws Exception {
         return this.contentService.updateContent(content, id);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteContent() {}
+    public void deleteContent(@PathVariable int id) {
+        this.contentService.deleteContent(id);
+    }
 }

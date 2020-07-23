@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
+
 @Service
 public class ContentService {
 
@@ -25,9 +27,9 @@ public class ContentService {
         return this.contentRepository.save(content);
     }
 
-    public Content updateContent(Content content, int id) {
+    public Content updateContent(Content content, int id) throws AuthenticationException {
         if (!contentRepository.findById(id).isPresent()) {
-            throw new IllegalArgumentException("This ID is not exist.");
+            throw new AuthenticationException("This ID is not exist.");
         }
 
         Content findContent = Content.builder()
@@ -41,5 +43,7 @@ public class ContentService {
         return this.contentRepository.save(findContent);
     }
 
-    public void deleteContent(int id) {}
+    public void deleteContent(int id) {
+        this.contentRepository.deleteById(id);
+    }
 }

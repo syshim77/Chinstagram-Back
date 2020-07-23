@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SignUpResponse {
+
     private String id;
     private String email;
     private String name;

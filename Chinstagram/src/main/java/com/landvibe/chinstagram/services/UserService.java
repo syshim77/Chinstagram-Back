@@ -6,6 +6,8 @@ import com.landvibe.chinstagram.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
+
 @Service
 public class UserService {
 
@@ -19,12 +21,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    private void verifyDuplicatedUser(String id) {
+    private void verifyDuplicatedUser(String id) throws AuthenticationException {
         if (userRepository.findById(id).isPresent())
-            throw new IllegalArgumentException("This ID is already exist.");
+            throw new AuthenticationException("This ID is already exist.");
     }
 
-    public SignUpResponse signUp(User user) {
+    public SignUpResponse signUp(User user) throws AuthenticationException {
         verifyDuplicatedUser(user.getId());
 
         user.setToken(jwtUtil.createToken());
@@ -39,24 +41,27 @@ public class UserService {
         return signUpResponse;
     }
 
-    public String logIn(LogInRequest logInRequest) {
-        User findUser = userRepository.findById(logInRequest.getId()).orElseThrow(() -> new IllegalArgumentException("This ID is not exist."));
+    public String logIn(LogInRequest logInRequest) throws AuthenticationException {
+        User findUser = userRepository.findById(logInRequest.getId()).orElseThrow(() -> new AuthenticationException("This ID is not exist."));
 
         if (!findUser.getPw().equals(logInRequest.getPw()))
-            throw new IllegalArgumentException("Password is not correct.");
+            throw new AuthenticationException("Password is not correct.");
 
         return findUser.getToken();
     }
 
-    public User getProfile(String id) {
+    public User getProfile(String id) throws AuthenticationException {
+        if (!userRepository.findById(id).isPresent()) {
+            throw new AuthenticationException("This ID is not exist.");
+        }
+
         return this.userRepository.findById(id).get();
     }
 
-    public User updateProfile(Profile profile, String id) {
-        User loginUser = userRepository.findById(id).get();
+    public User updateProfile(Profile profile, String id) throws AuthenticationException {
+        User loginUser = userRepository.findById(id).orElseThrow(() -> new AuthenticationException("This ID is not exist."));
         loginUser.setProfile(profile);
 
         return this.userRepository.save(loginUser);
     }
-
 }
