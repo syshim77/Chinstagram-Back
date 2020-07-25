@@ -1,5 +1,6 @@
 package com.landvibe.chinstagram.controllers;
 
+import com.landvibe.chinstagram.custom.CheckJwt;
 import com.landvibe.chinstagram.models.LogInRequest;
 import com.landvibe.chinstagram.models.Profile;
 import com.landvibe.chinstagram.models.SignUpResponse;
@@ -34,12 +35,14 @@ public class UserController {
         return this.userService.logIn(logInRequest, response);
     }
 
+    @CheckJwt
     @GetMapping("/{id}/profile")
     @ResponseStatus(HttpStatus.OK)
     public User getProfile(@PathVariable String id) throws Exception {
         return this.userService.getProfile(id);
     }
 
+    @CheckJwt
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User updateProfile(@RequestBody Profile profile, @PathVariable String id) throws Exception {
