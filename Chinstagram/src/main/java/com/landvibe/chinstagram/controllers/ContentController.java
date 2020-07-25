@@ -2,6 +2,7 @@ package com.landvibe.chinstagram.controllers;
 
 import com.landvibe.chinstagram.models.Content;
 import com.landvibe.chinstagram.services.ContentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/content")
 public class ContentController {
 
+    @Autowired
     private ContentService contentService;
 
     public ContentController(ContentService contentService) {

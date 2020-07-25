@@ -1,14 +1,21 @@
 package com.landvibe.chinstagram.controllers;
 
-import com.landvibe.chinstagram.models.*;
+import com.landvibe.chinstagram.models.LogInRequest;
+import com.landvibe.chinstagram.models.Profile;
+import com.landvibe.chinstagram.models.SignUpResponse;
+import com.landvibe.chinstagram.models.User;
 import com.landvibe.chinstagram.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
     public UserController(UserService userService) {
@@ -23,8 +30,8 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public String logIn(@RequestBody LogInRequest logInRequest) throws Exception {
-        return this.userService.logIn(logInRequest);
+    public String logIn(@RequestBody LogInRequest logInRequest, HttpServletResponse response) throws Exception {
+        return this.userService.logIn(logInRequest, response);
     }
 
     @GetMapping("/{id}/profile")
