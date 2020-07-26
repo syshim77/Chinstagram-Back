@@ -37,3 +37,4 @@ out/
 # *.a
 *.DS_Store
 application.yml
+aws.yml
