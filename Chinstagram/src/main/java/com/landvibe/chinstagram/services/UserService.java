@@ -2,11 +2,15 @@ package com.landvibe.chinstagram.services;
 
 import com.landvibe.chinstagram.jwt.JwtService;
 import com.landvibe.chinstagram.models.*;
+import com.landvibe.chinstagram.repositories.ImageRepository;
 import com.landvibe.chinstagram.repositories.UserRepository;
+import com.landvibe.chinstagram.uploader.S3Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +22,12 @@ public class UserService {
     private JwtService jwtService;
 
     @Autowired
+    private S3Uploader s3Uploader;
+
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -27,6 +37,14 @@ public class UserService {
     private void verifyDuplicatedUser(String id) throws AuthenticationException {
         if (userRepository.findById(id).isPresent())
             throw new AuthenticationException("This ID is already exist.");
+    }
+
+    private Image upload(MultipartFile multipartFile) throws Exception {
+        String imageUrl = s3Uploader.upload(multipartFile, "profile");
+        Image profileImage = new Image(multipartFile.getName(), imageUrl);
+        imageRepository.save(profileImage);
+
+        return profileImage;
     }
 
     public SignUpResponse signUp(User user) throws Exception {
@@ -71,8 +89,11 @@ public class UserService {
         return this.userRepository.findById(id).get();
     }
 
-    public User updateProfile(Profile profile, String id) throws Exception {
+    public User updateProfile(MultipartFile profileImage, Profile profile, String id) throws Exception {
         User loginUser = userRepository.findById(id).orElseThrow(() -> new AuthenticationException("This ID is not exist."));
+
+        Image updateImage = upload(profileImage);
+        profile.setImage(updateImage);
         loginUser.setProfile(profile);
 
         return this.userRepository.save(loginUser);
