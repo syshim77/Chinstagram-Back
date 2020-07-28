@@ -6,9 +6,9 @@ import com.landvibe.chinstagram.repositories.ImageRepository;
 import com.landvibe.chinstagram.repositories.UserRepository;
 import com.landvibe.chinstagram.uploader.S3Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +23,9 @@ public class UserService {
 
     @Autowired
     private S3Uploader s3Uploader;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Autowired
     private ImageRepository imageRepository;

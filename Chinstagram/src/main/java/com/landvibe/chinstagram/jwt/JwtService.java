@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,11 +18,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JwtService {
 
-    private static final String SECRET_KEY = "SECRETKEY";
+    private static final String SECRET_KEY = "SECRET_KEY";
 
     public String createToken(String key, LogInRequest logInRequest) throws Exception {
         return Jwts.builder()
@@ -72,5 +75,10 @@ public class JwtService {
         Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get(key);
 
         return value;
+    }
+
+    @Cacheable(value = "userInfo", key = "#logInRequest")
+    public void cacheUser(LogInRequest logInRequest) {
+        log.info("User ID: " + logInRequest.getId() + " is cached.");
     }
 }
