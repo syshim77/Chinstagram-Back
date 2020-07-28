@@ -9,6 +9,7 @@ import com.landvibe.chinstagram.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,8 +46,8 @@ public class UserController {
     @CheckJwt
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User updateProfile(@RequestBody Profile profile, @PathVariable String id) throws Exception {
-        return this.userService.updateProfile(profile, id);
+    public User updateProfile(@RequestParam("image") MultipartFile profileImage, @RequestBody Profile profile, @PathVariable String id) throws Exception {
+        return this.userService.updateProfile(profileImage, profile, id);
     }
 
 }
