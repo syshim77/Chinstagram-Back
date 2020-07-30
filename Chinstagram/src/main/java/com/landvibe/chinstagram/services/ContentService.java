@@ -4,7 +4,6 @@ import com.landvibe.chinstagram.models.Content;
 import com.landvibe.chinstagram.models.Image;
 import com.landvibe.chinstagram.repositories.ContentRepository;
 import com.landvibe.chinstagram.repositories.ImageRepository;
-import com.landvibe.chinstagram.uploader.S3Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +18,6 @@ import java.util.List;
 public class ContentService {
 
     @Autowired
-    private S3Uploader s3Uploader;
-
-    @Autowired
     private ImageRepository imageRepository;
 
     @Autowired
@@ -31,27 +27,11 @@ public class ContentService {
         this.contentRepository = contentRepository;
     }
 
-    private List<Image> upload(MultipartFile[] multipartFiles) throws Exception {
-        List<Image> contentImages = new ArrayList<>();
-
-        for (int i=0; i<multipartFiles.length; i++) {
-            String imageUrl = s3Uploader.upload(multipartFiles[i], "content");
-            Image image = new Image(multipartFiles[i].getName(), imageUrl);
-            imageRepository.save(image);
-            contentImages.add(image);
-        }
-
-        return contentImages;
-    }
-
     public Page<Content> getContents(int skip, int limit) {
         return contentRepository.findAll(PageRequest.of(skip, limit));
     }
 
     public Content createContent(MultipartFile[] contentImages, Content content) throws Exception {
-        List<Image> uploadImages = upload(contentImages);
-        content.setImages(uploadImages);
-
         return this.contentRepository.save(content);
     }
 
@@ -60,12 +40,10 @@ public class ContentService {
             throw new AuthenticationException("This ID is not exist.");
         }
 
-        List<Image> updateImages = upload(contentImages);
-
         Content findContent = Content.builder()
                 .id(content.getId())
                 .script(content.getScript())
-                .images(updateImages)
+                .images(contentImages)
                 .createTime(content.getCreateTime())
                 .updateTime(content.getUpdateTime())
                 .build();
