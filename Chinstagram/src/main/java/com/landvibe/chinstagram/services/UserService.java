@@ -4,6 +4,7 @@ import com.landvibe.chinstagram.jwt.JwtService;
 import com.landvibe.chinstagram.models.*;
 import com.landvibe.chinstagram.repositories.ImageRepository;
 import com.landvibe.chinstagram.repositories.UserRepository;
+import com.landvibe.chinstagram.uploader.S3Uploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,9 @@ public class UserService {
     private JwtService jwtService;
 
     @Autowired
+    private S3Uploader s3Uploader;
+
+    @Autowired
     private CacheManager cacheManager;
 
     @Autowired
@@ -36,6 +40,14 @@ public class UserService {
     private void verifyDuplicatedUser(String id) throws AuthenticationException {
         if (userRepository.findById(id).isPresent())
             throw new AuthenticationException("This ID is already exist.");
+    }
+
+    private Image upload(MultipartFile multipartFile) throws Exception {
+        String imageUrl = s3Uploader.upload(multipartFile, "profile");
+        Image profileImage = new Image(multipartFile.getName(), imageUrl);
+        imageRepository.save(profileImage);
+
+        return profileImage;
     }
 
     public SignUpResponse signUp(User user) throws Exception {
@@ -82,6 +94,9 @@ public class UserService {
 
     public User updateProfile(MultipartFile profileImage, Profile profile, String id) throws Exception {
         User loginUser = userRepository.findById(id).orElseThrow(() -> new AuthenticationException("This ID is not exist."));
+
+        Image updateImage = upload(profileImage);
+        profile.setImage(updateImage);
         loginUser.setProfile(profile);
 
         return this.userRepository.save(loginUser);
