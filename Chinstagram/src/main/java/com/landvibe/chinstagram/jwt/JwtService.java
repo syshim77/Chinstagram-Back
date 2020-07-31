@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.PostConstruct;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,33 +24,27 @@ import java.util.Map;
 public class JwtService {
 
     private static final String SECRET_KEY = "SECRET_KEY";
+    private byte[] JwtKey;
 
-    public String createToken(String key, LogInRequest logInRequest) throws Exception {
+    @PostConstruct
+    private void getSecretKey() throws Exception {
+        JwtKey = SECRET_KEY.getBytes("UTF-8");
+    }
+
+    public String createToken(String key, LogInRequest logInRequest) {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("regDate", System.currentTimeMillis())
                 .setSubject(logInRequest.getId())
                 .claim(key, logInRequest)
-                .signWith(SignatureAlgorithm.HS256, this.generateKey())
+                .signWith(SignatureAlgorithm.HS256, JwtKey)
                 .compact();
-    }
-
-    private byte[] generateKey() throws Exception {
-        byte[] key = null;
-
-        try {
-            key = SECRET_KEY.getBytes("UTF-8");
-        } catch(UnsupportedEncodingException e) {
-            throw new UnsupportedEncodingException("Unsupported Encoding Exception while generating key.");
-        }
-
-        return key;
     }
 
     public boolean isUsable(String jwt) throws Exception {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(this.generateKey())
+                    .setSigningKey(JwtKey)
                     .parseClaimsJws(jwt);
 
             return true;
@@ -65,7 +59,7 @@ public class JwtService {
         Jws<Claims> claims = null;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(SECRET_KEY.getBytes("UTF-8"))
+                    .setSigningKey(JwtKey)
                     .parseClaimsJws(jwt);
         } catch(Exception e) {
             throw new AuthenticationException("Getting data from JWT error.");

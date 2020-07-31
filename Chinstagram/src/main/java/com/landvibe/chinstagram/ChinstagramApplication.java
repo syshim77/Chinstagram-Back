@@ -1,6 +1,5 @@
 package com.landvibe.chinstagram;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cache.annotation.EnableCaching;
@@ -16,7 +15,6 @@ public class ChinstagramApplication {
             + "classpath:aws.yml";
 
     public static void main(String[] args) {
-        //SpringApplication.run(ChinstagramApplication.class, args);
         new SpringApplicationBuilder(ChinstagramApplication.class)
                 .properties(APPLICATION_LOCATIONS)
                 .run(args);
