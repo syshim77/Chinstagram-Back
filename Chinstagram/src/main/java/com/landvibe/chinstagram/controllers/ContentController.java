@@ -1,15 +1,20 @@
 package com.landvibe.chinstagram.controllers;
 
+import com.landvibe.chinstagram.custom.CheckJwt;
 import com.landvibe.chinstagram.models.Content;
 import com.landvibe.chinstagram.services.ContentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+@CheckJwt
 @RestController
 @RequestMapping("/content")
 public class ContentController {
 
+    @Autowired
     private ContentService contentService;
 
     public ContentController(ContentService contentService) {
@@ -24,14 +29,14 @@ public class ContentController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Content createContent(@RequestBody Content content) {
-        return this.contentService.createContent(content);
+    public Content createContent(@RequestParam("images") MultipartFile[] contentImages, @RequestBody Content content) throws Exception {
+        return this.contentService.createContent(contentImages, content);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Content updateContent(@RequestBody Content content, @PathVariable int id) throws Exception {
-        return this.contentService.updateContent(content, id);
+    public Content updateContent(@RequestParam("images") MultipartFile[] contentImages, @RequestBody Content content, @PathVariable int id) throws Exception {
+        return this.contentService.updateContent(contentImages, content, id);
     }
 
     @DeleteMapping("{id}")
