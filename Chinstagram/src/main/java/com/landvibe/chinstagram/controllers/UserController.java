@@ -49,5 +49,4 @@ public class UserController {
     public User updateProfile(@RequestParam("image") MultipartFile profileImage, @RequestBody Profile profile, @PathVariable String id) throws Exception {
         return this.userService.updateProfile(profileImage, profile, id);
     }
-
 }

@@ -1,7 +1,6 @@
 package com.landvibe.chinstagram.jwt;
 
 import com.landvibe.chinstagram.custom.CheckJwt;
-import com.landvibe.chinstagram.models.LogInRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -10,7 +9,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @Component
 public class JwtAuthInterceptor implements HandlerInterceptor {
@@ -27,16 +25,13 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
         HandlerMethod method = (HandlerMethod)handler;
         CheckJwt checkJwt = method.getMethodAnnotation(CheckJwt.class);
 
-        if (checkJwt == null || checkJwt.needCheck() == false) {
+        if (checkJwt == null || !checkJwt.needCheck()) {
             return true;
         }
 
         if (givenToken == null || !jwtService.isUsable(givenToken)) {
             throw new AuthenticationException("Token validation error.");
         }
-
-        Map<String, Object> logIn = jwtService.get(givenToken);
-        jwtService.cacheUser((LogInRequest)logIn);
 
         return true;
     }

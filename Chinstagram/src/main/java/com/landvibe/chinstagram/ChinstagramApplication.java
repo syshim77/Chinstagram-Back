@@ -2,12 +2,10 @@ package com.landvibe.chinstagram;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories
-@EnableCaching
 public class ChinstagramApplication {
 
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
@@ -19,5 +17,4 @@ public class ChinstagramApplication {
                 .properties(APPLICATION_LOCATIONS)
                 .run(args);
     }
-
 }
