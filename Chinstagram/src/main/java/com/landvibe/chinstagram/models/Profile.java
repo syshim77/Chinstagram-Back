@@ -44,5 +44,4 @@ public class Profile {
     protected void onUpdate() {
         updateTime = LocalDateTime.now();
     }
-
 }

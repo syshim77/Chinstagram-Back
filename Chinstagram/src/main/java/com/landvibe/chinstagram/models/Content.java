@@ -46,5 +46,4 @@ public class Content {
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
-
 }

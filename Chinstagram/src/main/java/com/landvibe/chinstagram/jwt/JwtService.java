@@ -7,13 +7,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.PostConstruct;
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,7 +39,7 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isUsable(String jwt) throws Exception {
+    public boolean isUsable(String jwt) {
         try {
             Jws<Claims> claims = Jwts.parser()
                     .setSigningKey(JwtKey)
@@ -49,11 +47,11 @@ public class JwtService {
 
             return true;
         } catch(Exception e) {
-            throw new AuthenticationException("Token validation error.");
+            return false;
         }
     }
 
-    public Map<String, Object> get(String key) throws Exception {
+    public Map<String, Object> get(String key) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String jwt = request.getHeader("Authorization");
         Jws<Claims> claims = null;
@@ -62,17 +60,12 @@ public class JwtService {
                     .setSigningKey(JwtKey)
                     .parseClaimsJws(jwt);
         } catch(Exception e) {
-            throw new AuthenticationException("Getting data from JWT error.");
+            Map<String, Object> value = null;
         }
 
         @SuppressWarnings("unchecked")
         Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get(key);
 
         return value;
-    }
-
-    @Cacheable(value = "userInfo", key = "#logInRequest")
-    public void cacheUser(LogInRequest logInRequest) {
-        log.info("User ID: " + logInRequest.getId() + " is cached.");
     }
 }
