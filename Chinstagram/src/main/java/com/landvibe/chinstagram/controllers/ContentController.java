@@ -11,7 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @CheckJwt
 @RestController
-@RequestMapping("/content")
+@RequestMapping("/chinstagram/content")
+@CrossOrigin
 public class ContentController {
 
     @Autowired

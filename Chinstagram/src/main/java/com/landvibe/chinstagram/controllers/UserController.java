@@ -14,7 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/chinstagram/user")
+@CrossOrigin
 public class UserController {
 
     @Autowired
