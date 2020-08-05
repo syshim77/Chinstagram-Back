@@ -1,5 +1,6 @@
 package com.landvibe.chinstagram.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,5 +44,14 @@ public class Profile {
     @PreUpdate
     protected void onUpdate() {
         updateTime = LocalDateTime.now();
+    }
+
+    @Builder
+    public Profile(String id, String nickname, String intro, Image image, LocalDateTime createTime, LocalDateTime updateTime) {
+        this.id = id;
+        this.nickname = nickname;
+        this.image = image;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 }

@@ -30,13 +30,26 @@ public class ContentController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Content createContent(@RequestParam("images") MultipartFile[] contentImages, @RequestBody Content content) throws Exception {
+    public Content createContent(@RequestParam("images") MultipartFile[] contentImages,
+                                 @RequestParam("id") Integer contentId,
+                                 @RequestParam("script") String contentScript) throws Exception {
+        Content content = Content.builder()
+                .id(contentId)
+                .script(contentScript)
+                .build();
         return this.contentService.createContent(contentImages, content);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Content updateContent(@RequestParam("images") MultipartFile[] contentImages, @RequestBody Content content, @PathVariable int id) throws Exception {
+    public Content updateContent(@RequestParam("images") MultipartFile[] contentImages,
+                                 @RequestParam("id") Integer contentId,
+                                 @RequestParam("script") String contentScript,
+                                 @PathVariable int id) throws Exception {
+        Content content = Content.builder()
+                .id(contentId)
+                .script(contentScript)
+                .build();
         return this.contentService.updateContent(contentImages, content, id);
     }
 

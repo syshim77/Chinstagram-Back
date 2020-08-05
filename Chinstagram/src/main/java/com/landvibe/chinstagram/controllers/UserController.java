@@ -47,7 +47,15 @@ public class UserController {
     @CheckJwt
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User updateProfile(@RequestParam("image") MultipartFile profileImage, @RequestBody Profile profile, @PathVariable String id) throws Exception {
+    public User updateProfile(@RequestParam("image") MultipartFile profileImage,
+                              @RequestParam("nickname") String nickname,
+                              @RequestParam("intro") String intro,
+                              @PathVariable String id) throws Exception {
+        Profile profile = Profile.builder()
+                .id(id)
+                .nickname(nickname)
+                .intro(intro)
+                .build();
         return this.userService.updateProfile(profileImage, profile, id);
     }
 }
